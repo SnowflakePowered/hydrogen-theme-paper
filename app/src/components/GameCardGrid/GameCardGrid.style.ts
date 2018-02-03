@@ -3,8 +3,8 @@ import { StyleRules } from 'material-ui/styles/withStyles'
 export const styles: StyleRules = {
   container: {
     display: 'flex',
-    width: '100%',
-    height: '100%',
+    height: '-webkit-fill-available',
+    width: '-webkit-fill-available',
     flexDirection: 'column',
     overflowY: 'auto',
     overflowX: 'hidden',
@@ -15,7 +15,8 @@ export const styles: StyleRules = {
     display: 'inline-block'
   },
   autoSizerContainer: {
-    height: '100%'
+    height: '-webkit-fill-available',
+    width: '-webkit-fill-available',
   },
   cellWrapper: {
     display: 'flex',
@@ -24,7 +25,6 @@ export const styles: StyleRules = {
   },
   gridContainer: {
     display: 'flex',
-    justifyContent: 'center',
-    margin: [10, 10]
+    justifyContent: 'center'
   }
 }

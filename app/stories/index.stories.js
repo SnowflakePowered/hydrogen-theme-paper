@@ -39,5 +39,6 @@ storiesOf('Game Card', module)
   title="Lorem Ipsum" subtitle="Dolor Sit Amen"/>);
 
 storiesOf('Game Card Grid', module)
-  .addDecorator(full)
   .add('portrait grid', () => <PortraitGameGridViewStory />)
+  .add('landscape grid', () => <LandscapeGameGridViewStory />)
+  .add('square grid', () => <SquareGameGridViewStory />)

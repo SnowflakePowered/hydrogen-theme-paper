@@ -2,7 +2,7 @@ import * as React from 'react'
 import injectSheet, { StyleProps } from 'support/InjectSheet'
 import { dimensions } from 'components/GameCard/GameCard.style'
 import { styles } from './GameCardGrid.style'
-import { CellMeasurerCache, CellMeasurer, AutoSizer, Grid } from 'react-virtualized'
+import { CellMeasurerCache, CellMeasurer, AutoSizer, Grid, ColumnSizer } from 'react-virtualized'
 
 type GameCardGridProps = {
   portrait?: boolean,
@@ -41,9 +41,9 @@ class GameCardGrid extends React.PureComponent<GameCardGridProps & StyleProps, G
     this.state = {
       heightCache: new CellMeasurerCache({
         defaultWidth: 100,
-        fixedHeight: true,
+        fixedHeight: false,
         minWidth: 100,
-        defaultHeight: 300,
+        defaultHeight: 250,
         minHeight: 250
       })
     }
@@ -84,30 +84,45 @@ class GameCardGrid extends React.PureComponent<GameCardGridProps & StyleProps, G
     const { BOX_WIDTH } = getDimensions(this.props.portrait, this.props.landscape, this.props.square)
     const children = React.Children.toArray(this.props.children)
     return (
-      <AutoSizer>
-      {({ height, width }) => {
-          const numberOfColumns = Math.floor(width / BOX_WIDTH)
-          const numberOfRows = Math.ceil(children.length / numberOfColumns)
-          const cellRender = this.cellRenderer({
-                                    className: this.props.classes.cellWrapper,
-                                    children: children,
-                                    numberOfRows,
-                                    numberOfColumns,
-                                    cache: this.state.heightCache
-                                  })
-          return (
-          <Grid
-            height={height}
-            width={width}
-            columnWidth={this.state.heightCache.columnWidth}
-            deferredMeasurementCache={this.state.heightCache}
-            cellRenderer={cellRender}
-            columnCount={numberOfColumns}
-            rowCount={numberOfRows}
-            rowHeight={this.state.heightCache.rowHeight}
-          />
-        )}}
-    </AutoSizer>
+      <div className={this.props.classes.container}>
+        <div className={this.props.classes.autoSizerContainer}>
+          <AutoSizer>
+          {({ height, width }) => {
+              const numberOfColumns = Math.floor(width / BOX_WIDTH)
+              const numberOfRows = Math.ceil(children.length / numberOfColumns)
+              const cellRender = this.cellRenderer({
+                                        className: this.props.classes.cellWrapper,
+                                        children: children,
+                                        numberOfRows,
+                                        numberOfColumns,
+                                        cache: this.state.heightCache
+                                      })
+              const CENTERED_BOX_WIDTH = BOX_WIDTH + (BOX_WIDTH / numberOfColumns / 2) - padding
+              return (
+                <ColumnSizer
+                  columnMaxWidth={CENTERED_BOX_WIDTH}
+                  columnMinWidth={BOX_WIDTH}
+                  columnCount={numberOfColumns}
+                  width={width}
+                >
+                {({ adjustedWidth, getColumnWidth, registerChild }) => (
+                  <Grid
+                    className={this.props.classes.gridContainer}
+                    height={height}
+                    width={width}
+                    ref={registerChild}
+                    columnWidth={getColumnWidth}
+                    deferredMeasurementCache={this.state.heightCache}
+                    cellRenderer={cellRender}
+                    columnCount={numberOfColumns}
+                    rowCount={numberOfRows}
+                    rowHeight={this.state.heightCache.rowHeight}
+                  />)}
+                </ColumnSizer>
+            )}}
+        </AutoSizer>
+      </div>
+    </div>
     )
   }
 }

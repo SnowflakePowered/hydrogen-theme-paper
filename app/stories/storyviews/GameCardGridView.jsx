@@ -12,51 +12,53 @@ const styles = {
     height: '-webkit-fill-available'
   }
 }
+const landscapeCard = int => (<GameCard 
+  key={int}
+  title={int} landscape/>)
+const landscapeGameList = [...Array(1000)].map((x, i) => landscapeCard(i + 1))
 
 
 const _LandscapeGameGridViewStory = ({ classes }) => {
-  const card = int => (<GameCard 
-        key={int}
-        title={int} landscape/>)
-  const gameList = [...Array(2500)].map((x, i) => card(i + 1))
-
+ 
   return (
     <div className={classes.container}>
       <GameCardGrid landscape>
-        
-      </GameCardGrid>
-    </div>)
-}
-
-
-const _PortraitGameGridViewStory = ({ classes }) => {
-  const card = int => (<GameCard
-    key={int}
-    image="http://vignette2.wikia.nocookie.net/mario/images/6/60/SMBBoxart.png/revision/latest?cb=20120609143443"
-    title={int} publisher="Nintendo" portrait/>)
-  const gameList = [...Array(1000)].map((x, i) => card(i + 1))
-  return (
-    <div className={classes.container}>
-      <GameCardGrid>
-        {
-          gameList
+       {
+          landscapeGameList
         }
       </GameCardGrid>
     </div>)
 }
 
+const portraitCard = int => (<GameCard
+  key={int}
+  title={int} publisher="Nintendo" portrait/>)
+const portraitGameList = [...Array(1000)].map((x, i) => portraitCard(i + 1))
+
+const _PortraitGameGridViewStory = ({ classes }) => {
+
+  return (
+    <div className={classes.container}>
+      <GameCardGrid>
+        {
+          portraitGameList
+        }
+      </GameCardGrid>
+    </div>)
+}
+
+const squareCard = int => (<GameCard
+  key={int}
+  title={int} publisher="Nintendo" square/>)
+const squareGameList = [...Array(1000)].map((x, i) => squareCard(i + 1))
 
 const _SquareGameGridViewStory = ({ classes }) => {
-  const card = int => (<GameCard
-    key={int}
-    image="https://upload.wikimedia.org/wikipedia/en/d/db/NewSuperMarioBrothers.jpg"
-    title={int} publisher="Nintendo" square/>)
-  const gameList = [...Array(100)].map((x, i) => card(i + 1))
+
   return (
     <div className={classes.container}>
       <GameCardGrid square>
         {
-          gameList
+          squareGameList
         }
       </GameCardGrid>
     </div>)
