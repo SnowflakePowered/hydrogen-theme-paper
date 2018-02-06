@@ -10,7 +10,13 @@ import PhotoIcon from 'material-ui-icons/Photo'
 
 import * as classNames from 'classnames'
 import { styles } from './GameCard.style'
+import { QuickPlayEvent } from 'support/ComponentEvents/QuickPlayEvent';
+import { ViewTransitionEvent, ViewStates } from 'support/ComponentEvents/ViewTransitionEvent';
 
+type GameDetailsTransitionProps = {
+  platformID: string,
+  guid: string
+}
 // todo: z-depth on hover
 // todo: button on hover
 type GameCardProps = {
@@ -22,11 +28,14 @@ type GameCardProps = {
   landscape?: boolean,
   square?: boolean,
   guid: string,
-  platformID: string
+  platformID: string,
+  onQuickPlay?: (event: QuickPlayEvent) => void
+  onTransition?: (event: ViewTransitionEvent<GameDetailsTransitionProps>) => void
 }
 
 const GameCard: React.SFC<GameCardProps & StyleProps> =
- ({ classes, image, title, subtitle, portrait, landscape, square, guid, platformID }) => (
+ ({ classes, image, title, subtitle, portrait, landscape, square, guid, platformID,
+    onQuickPlay, onTransition }) => (
   <div 
     className={classNames({
       [classes.cardContainer]: true,
@@ -39,7 +48,7 @@ const GameCard: React.SFC<GameCardProps & StyleProps> =
     <Card>
       <CardMedia className={classes.cardMedia} image={image}>
         <div className={classes.playButton}>
-          <GamePlayButton />
+          <GamePlayButton onClick={() => onQuickPlay!({gameGuid: guid})}/>
         </div>
         <div 
           className={classNames({
@@ -50,12 +59,24 @@ const GameCard: React.SFC<GameCardProps & StyleProps> =
             [classes.sizerPortrait]: !(portrait && landscape && square)
           })}
         >
-          <div className={classes.cardImageContainer}>
+          <div
+            className={classes.cardImageContainer} 
+            onClick={
+            () => onTransition!({
+              nextView: ViewStates.GameDetailsView, props: {platformID: platformID, guid: guid}
+            })}
+          >
             {image ? <img className={classes.cardImage} src={image} /> : <PhotoIcon/>}
           </div>
         </div>
       </CardMedia>
-      <div className={classes.cardText}>
+      <div 
+        className={classes.cardText}
+        onClick={
+          () => onTransition!({
+            nextView: ViewStates.GameDetailsView, props: {platformID: platformID, guid: guid}
+          })}
+      >
         <CardContent>
           <Typography type="headline" component="h2" className={classes.cardTitle}>{title}</Typography>
           <Typography component="h3" className={classes.cardSubtitle}>{subtitle}</Typography>

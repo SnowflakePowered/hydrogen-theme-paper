@@ -10,6 +10,7 @@ type GamePlayButtonProps = {
   onClick?: (event: React.MouseEvent<{}>) => void,
   loading?: boolean
 }
+
 const GamePlayButton: React.SFC<GamePlayButtonProps & StyleProps> = ({classes, onClick, loading}) => (
   <div className={classes.buttonContainer}>
     <div className={classes.pulse}/>
