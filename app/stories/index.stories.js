@@ -10,6 +10,8 @@ import GameCard from '../src/components/GameCard/GameCard';
 import { LandscapeGameGridViewStory, 
   PortraitGameGridViewStory, 
   SquareGameGridViewStory } from './storyviews/GameCardGridView'
+import BooleanWidgetView from './storyviews/BooleanWidgetView'
+import StringWidgetView from './storyviews/StringWidgetView'
 
 import full from './utils/full'
 import Sidebar from 'components/Sidebar/Sidebar';
@@ -18,7 +20,13 @@ import PlatformList from 'components/PlatformList/PlatformList';
 import { platform } from 'os';
 import GameDisplay from 'components/GameDisplay/GameDisplay';
 import ImageCard from 'components/ImageCard/ImageCard';
-
+import SearchBar from 'components/SearchBar/SearchBar';
+import BooleanWidget from 'components/ConfigurationWidgets/BooleanWidget/BooleanWidget';
+import { ConfigurationOption, ConfigurationDescriptor, ConfigurationValue } from 'support/Snowflake'
+import SelectWidget from 'components/ConfigurationWidgets/SelectWidget/SelectWidget';
+import StringWidget from 'components/ConfigurationWidgets/StringWidget/StringWidget';
+import { ConfigurationValueChangeEvent } from 'support/ComponentEvents/ConfigurationValueChangeEvent';
+import SelectWidgetView from './storyviews/SelectWidgetView';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -84,3 +92,77 @@ const platforms = [
 storiesOf('Platform List', module)
   .addDecorator(full)
   .add('platform list', () => <PlatformList platforms={platforms} selectedPlatform={platforms[0]}/>)
+
+
+storiesOf('Search Bar', module)
+  .add('search bar', () => <SearchBar onSearch={action('on-search')}/>)
+
+/** 
+ * @type {ConfigurationOption}
+ */
+const booleanOption = {
+  Descriptor: {
+    DisplayName: 'Test Boolean Option',
+    Description: 'A Test Boolean Option'
+  },
+  Value: {
+    Value: true,
+    Guid: 'test-guid'
+  }
+}
+
+/** 
+ * @type {ConfigurationOption}
+ */
+const selectOption = {
+  Descriptor: {
+    DisplayName: 'Test Selection Option',
+    Description: 'A Test Selection Option'
+  },
+  Value: {
+    Value: 0,
+    Guid: 'test-guid'
+  },
+  Selection: [
+    {
+      DisplayName: 'Option One',
+      NumericValue: 0
+    },
+    {
+      DisplayName: 'Option Two',
+      NumericValue: 1
+    },
+    {
+      DisplayName: 'Option Three',
+      NumericValue: 3
+    }
+  ]
+}
+
+/** 
+ * @type {ConfigurationOption}
+ */
+const stringOption = {
+  Descriptor: {
+    DisplayName: 'Test String Option',
+    Description: 'A Test String Option'
+  },
+  Value: {
+    Value: "Lorem Ipsum",
+    Guid: 'test-guid'
+  }
+}
+
+storiesOf('Configuration Widgets', module)
+  .add('boolean widget', () => 
+    <BooleanWidget option={booleanOption} onValueChange={action('on-config-value-changed')}/>)
+  .add('boolean widget handled', () => 
+    <BooleanWidgetView/>)
+  .add('selection widget', () =>
+    <SelectWidget option={selectOption} onValueChange={action('on-config-value-changed')}/>)
+  .add('selection widget handled', () =>
+    <SelectWidgetView/>)
+  .add('string widget', () =>
+    <StringWidget option={stringOption} onValueChange={action('on-config-value-changed')}/>)
+  .add('string widget handled', () =>
+    <StringWidgetView/>)

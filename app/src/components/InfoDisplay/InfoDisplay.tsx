@@ -19,10 +19,10 @@ const InfoDisplay: React.SFC<InfoDisplayProps & StyleProps> =
       <div className={classes.title}>{title || ''}</div>
       <div className={classes.subTitle}>{subtitle || ''}</div>
       <div className={classes.tagline}>{tagline || ''}</div>
-      {(metadata || []).map(m => <div className={classes.metadata} key={m}>{m || ''}</div>)}
+      {(metadata || []).map(m => <div className={classes.metadata} key={'key:' + m}>{m || ''}</div>)}
     </div>
     <div className={classes.bottom}>
-      {(stats || []).map(s => <div className={classes.stats} key={s}>{s || ''}</div>)}
+      {(stats || []).map(s => <div className={classes.stats} key={'key:' + s}>{s || ''}</div>)}
     </div>
   </div>
 )
