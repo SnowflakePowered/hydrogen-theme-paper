@@ -9,7 +9,8 @@ import GamePlayButton from '../src/components/GamePlayButton/GamePlayButton';
 import GameCard from '../src/components/GameCard/GameCard';
 import { LandscapeGameGridViewStory, 
   PortraitGameGridViewStory, 
-  SquareGameGridViewStory } from './storyviews/GameCardGridView'
+  SquareGameGridViewStory,
+  PortraitGameGridViewStoryHeader } from './storyviews/GameCardGridView'
 import BooleanWidgetView from './storyviews/BooleanWidgetView'
 import StringWidgetView from './storyviews/StringWidgetView'
 
@@ -66,7 +67,8 @@ storiesOf('Game Card', module)
 storiesOf('Game Card Grid', module)
   .add('portrait grid', () => <PortraitGameGridViewStory />)
   .add('landscape grid', () => <LandscapeGameGridViewStory />)
-  .add('square grid', () => <SquareGameGridViewStory />);
+  .add('square grid', () => <SquareGameGridViewStory />)
+  .add('portrait grid with header', () => <PortraitGameGridViewStoryHeader />)
 
 storiesOf('Sidebar', module)
   .addDecorator(full)

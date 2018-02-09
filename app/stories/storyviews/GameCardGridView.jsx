@@ -64,7 +64,24 @@ const _SquareGameGridViewStory = ({ classes }) => {
     </div>)
 }
 
+const _PortraitGameGridViewStoryHeader = ({ classes }) => {
+
+  return (
+    <div className={classes.container}>
+      <GameCardGrid header={
+        <div>
+          Hello World!
+        </div>
+
+      }>
+        {
+          portraitGameList
+        }
+      </GameCardGrid>
+    </div>)
+}
 
 export const LandscapeGameGridViewStory = injectSheet(styles)(_LandscapeGameGridViewStory) 
 export const PortraitGameGridViewStory = injectSheet(styles)(_PortraitGameGridViewStory) 
 export const SquareGameGridViewStory = injectSheet(styles)(_SquareGameGridViewStory) 
+export const PortraitGameGridViewStoryHeader = injectSheet(styles)(_PortraitGameGridViewStoryHeader)

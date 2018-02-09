@@ -1,0 +1,19 @@
+{
+    "prettier.eslintIntegration": true,
+    "prettier.semi": false,
+    "prettier.singleQuote": true,
+    "javascript.nameSuggestions": true,
+    "javascript.referencesCodeLens.enabled": true,
+    "typescript.referencesCodeLens.enabled": true,
+    "typescript.quickSuggestionsForPaths": true,
+    "typescript.autoImportSuggestions.enabled": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "node_modules/": true,
+        ".legacy": true
+    }
+}

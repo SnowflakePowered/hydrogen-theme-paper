@@ -42,7 +42,7 @@ const DecimalWidget: React.SFC<DecimalWidgetProps & WidgetChildrenProps> = ({
         />
       </div>
     </ConfigurationWidget>
-  );
-};
+  )
+}
 
-export default DecimalWidget;
+export default DecimalWidget

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Slider } from 'rmwc/Slider'
 import injectSheet, { StyleProps } from 'support/InjectSheet'
 import { styles } from './ControlledSlider.styles'
-import { TextField } from 'material-ui';
+import { TextField } from 'material-ui'
 
 type ControlledSliderState = {
   value: number
