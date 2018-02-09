@@ -7,8 +7,8 @@ import BottomSheet from 'components/BottomSheet/BottomSheet'
 import Button from 'material-ui/Button'
 
 import { styles } from './PlatformList.style'
-import PlatformDisplay from 'components/PlatformDisplay/PlatformDisplay';
-import { Platform } from 'support/Snowflake';
+import PlatformDisplay from 'components/PlatformDisplay/PlatformDisplay'
+import { Platform } from 'support/Snowflake'
 
 type PlatformListProps = {
   platforms: { [platformId: string]: Platform },

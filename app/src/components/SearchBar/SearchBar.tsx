@@ -7,7 +7,7 @@ import Input from 'material-ui/Input/Input'
 import SearchIcon from 'material-ui-icons/Search'
 
 import { styles } from './SearchBar.style'
-import { SearchBarEvent } from 'support/ComponentEvents/SearchBarEvent';
+import { SearchBarEvent } from 'support/ComponentEvents/SearchBarEvent'
 
 type SearchBarProps = {
   tagline?: string,

@@ -43,7 +43,7 @@ const IntegerWidget: React.SFC<IntegerWidgetProps & WidgetChildrenProps> = ({
         />
       </div>
     </ConfigurationWidget>
-  );
-};
+  )
+}
 
-export default IntegerWidget;
+export default IntegerWidget

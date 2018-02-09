@@ -10,8 +10,8 @@ import PhotoIcon from 'material-ui-icons/Photo'
 
 import * as classNames from 'classnames'
 import { styles } from './GameCard.style'
-import { QuickPlayEvent } from 'support/ComponentEvents/QuickPlayEvent';
-import { ViewTransitionEvent, ViewStates } from 'support/ComponentEvents/ViewTransitionEvent';
+import { QuickPlayEvent } from 'support/ComponentEvents/QuickPlayEvent'
+import { ViewTransitionEvent, ViewStates } from 'support/ComponentEvents/ViewTransitionEvent'
 
 type GameDetailsTransitionProps = {
   platformID: string,

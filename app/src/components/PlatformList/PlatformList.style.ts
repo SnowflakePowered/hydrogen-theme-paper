@@ -1,5 +1,5 @@
 import grey from 'material-ui/colors/grey'
-import { StyleRules } from 'material-ui/styles/withStyles';
+import { StyleRules } from 'material-ui/styles/withStyles'
 
 export const styles: StyleRules = {
   platformSelector: {

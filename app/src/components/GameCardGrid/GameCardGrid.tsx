@@ -19,7 +19,7 @@ type GameCardGridState = {
 const padding = 24
 
 const getDimensions = (portrait, landscape, square) => {
-  let dimensionObject;
+  let dimensionObject
   if (portrait) {
     dimensionObject = dimensions.portrait
   } else if (landscape) {
@@ -77,7 +77,7 @@ class GameCardGrid extends React.PureComponent<GameCardGridProps & StyleProps, G
           {content}
         </div>
       </CellMeasurer>
-    );
+    )
   }
 
   render () {

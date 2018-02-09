@@ -1,5 +1,5 @@
 import grey from 'material-ui/colors/grey'
-import { StyleRules } from 'material-ui/styles';
+import { StyleRules } from 'material-ui/styles'
 
 export const dimensions = {
   portrait: {

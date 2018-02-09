@@ -1,5 +1,5 @@
 import { StyleRules } from 'material-ui/styles'
-import { blue } from 'material-ui/colors';
+import { blue } from 'material-ui/colors'
 
 export const styles: StyleRules = {
   barContainer: {
