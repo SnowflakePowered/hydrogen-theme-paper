@@ -25,8 +25,13 @@ import BooleanWidget from 'components/ConfigurationWidgets/BooleanWidget/Boolean
 import { ConfigurationOption, ConfigurationDescriptor, ConfigurationValue } from 'support/Snowflake'
 import SelectWidget from 'components/ConfigurationWidgets/SelectWidget/SelectWidget';
 import StringWidget from 'components/ConfigurationWidgets/StringWidget/StringWidget';
+import IntegerWidget from 'components/ConfigurationWidgets/IntegerWidget/IntegerWidget';
+import DecimalWidget from 'components/ConfigurationWidgets/DecimalWidget/DecimalWidget';
+
 import { ConfigurationValueChangeEvent } from 'support/ComponentEvents/ConfigurationValueChangeEvent';
 import SelectWidgetView from './storyviews/SelectWidgetView';
+import IntegerWidgetView from './storyviews/IntegerWidgetView';
+import DecimalWidgetView from './storyviews/DecimalWidgetView';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -153,6 +158,40 @@ const stringOption = {
   }
 }
 
+/** 
+ * @type {ConfigurationOption}
+ */
+const integerOption = {
+  Descriptor: {
+    DisplayName: 'Test Integer Option',
+    Description: 'A Test Integer Option',
+    Min: -10,
+    Max: 10,
+    Increment: 2
+  },
+  Value: {
+    Value: 0,
+    Guid: 'test-guid'
+  }
+}
+
+
+/** 
+ * @type {ConfigurationOption}
+ */
+const decimalOption = {
+  Descriptor: {
+    DisplayName: 'Test Decimal Option',
+    Description: 'A Test Decimal Option',
+    Min: -10,
+    Max: 10,
+    Increment: 0.5
+  },
+  Value: {
+    Value: 0,
+    Guid: 'test-guid'
+  }
+}
 storiesOf('Configuration Widgets', module)
   .add('boolean widget', () => 
     <BooleanWidget option={booleanOption} onValueChange={action('on-config-value-changed')}/>)
@@ -166,3 +205,11 @@ storiesOf('Configuration Widgets', module)
     <StringWidget option={stringOption} onValueChange={action('on-config-value-changed')}/>)
   .add('string widget handled', () =>
     <StringWidgetView/>)
+  .add('integer slider widget', () =>
+    <IntegerWidget option={integerOption} onValueChange={action('on-config-value-changed')}/>)
+  .add('integer slide widget handled', () => 
+  <IntegerWidgetView/>)
+  .add('decimal slider widget', () =>
+    <DecimalWidget option={decimalOption} onValueChange={action('on-config-value-changed')}/>)
+  .add('decimal slide widget handled', () => 
+    <DecimalWidgetView/>)

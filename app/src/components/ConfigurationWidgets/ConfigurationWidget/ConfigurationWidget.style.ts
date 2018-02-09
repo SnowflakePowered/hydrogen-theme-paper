@@ -13,7 +13,10 @@ export const styles: StyleRules = {
   
     },
     control: {
-      justifySelf: 'end'
+      justifySelf: 'end',
+      width: '-webkit-fill-available',
+      marginRight: 20,
+      justifyContent: 'flex-end'
     },
     configTitle: {
   
