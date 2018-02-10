@@ -1,0 +1,13 @@
+/* .gqlconfig */
+{
+  schema: {
+    files: 'schemas/**/*.gql'
+  },
+  query: {
+    files: [ 
+      {
+        match: 'src/**/*.ts',
+        parser: ['EmbeddedQueryParser', { startTag: 'gql`', endTag: '`' }]
+      },
+  },
+}
