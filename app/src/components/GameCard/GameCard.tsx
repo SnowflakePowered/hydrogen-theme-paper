@@ -78,7 +78,7 @@ const GameCard: React.SFC<GameCardProps & StyleProps> =
           })}
       >
         <CardContent>
-          <Typography type="headline" component="h2" className={classes.cardTitle}>{title}</Typography>
+          <Typography variant="headline" component="h2" className={classes.cardTitle}>{title}</Typography>
           <Typography component="h3" className={classes.cardSubtitle}>{subtitle}</Typography>
         </CardContent>
       </div>

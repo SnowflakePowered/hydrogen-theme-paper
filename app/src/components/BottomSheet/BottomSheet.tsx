@@ -2,8 +2,9 @@ import * as React from 'react'
 import Paper from 'material-ui/Paper'
 
 import injectSheet, { StyleProps } from 'support/InjectSheet'
+import { StyleRules } from 'material-ui/styles';
 
-const styles = {
+const styles: StyleRules = {
   container: {
     height: '100%',
     padding: 10,

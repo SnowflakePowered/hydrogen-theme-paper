@@ -12,9 +12,7 @@ export const styles: StyleRules = {
   container: {
     display: 'grid',
     gridTemplateColumns: '30% auto',
-    gridTemplateAreas: [
-      '"selector info"'
-    ],
+    gridTemplateAreas: '"selector info"',
     height: '100%'
   },
   platformDisplay: {
