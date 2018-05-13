@@ -27,14 +27,14 @@ const IntegerWidget: React.SFC<IntegerWidgetProps & WidgetChildrenProps> = ({
     >
       <div>
         <ControlledSlider
-          value={option.Value.Value as number}
+          sliderValue={option.Value.Value as number}
           discrete={true}
           min={option.Descriptor.Min}
           max={option.Descriptor.Max}
           step={option.Descriptor.Increment}
           onChange={e =>
             onValueChange!({
-              newValue: parseInt(e.target.value, 10),
+              newValue: e,
               valueGuid: option.Value.Guid,
               previousValue: option.Value.Value,
               type: 'integer'
