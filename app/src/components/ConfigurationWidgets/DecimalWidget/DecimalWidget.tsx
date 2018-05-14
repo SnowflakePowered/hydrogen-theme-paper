@@ -27,13 +27,13 @@ const DecimalWidget: React.SFC<DecimalWidgetProps & WidgetChildrenProps> = ({
     >
       <div>
         <ControlledSlider
-          value={option.Value.Value as number}
+          sliderValue={option.Value.Value as number}
           min={option.Descriptor.Min}
           max={option.Descriptor.Max}
-          step={option.Descriptor.Increment}
+          discrete={false}
           onChange={e =>
             onValueChange!({
-              newValue: parseFloat(e.target.value),
+              newValue: e,
               valueGuid: option.Value.Guid,
               previousValue: option.Value.Value,
               type: 'decimal'

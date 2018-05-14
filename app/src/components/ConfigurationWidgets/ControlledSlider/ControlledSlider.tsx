@@ -4,13 +4,13 @@ import injectSheet, { StyleProps } from 'support/InjectSheet'
 import { styles } from './ControlledSlider.styles'
 import { TextField } from '@material-ui/core'
 
-type ControlledSliderState = {
-  value: number
-}
+// type ControlledSliderState = {
+//   sliderValue: number
+// }
 
 type ControlledSliderProps = {
-  value?: number
-  onChange: React.ChangeEventHandler<HTMLInputElement>
+  sliderValue?: number
+  onChange: (newValue: number) => void
   max?: number
   min?: number
   discrete?: boolean
@@ -18,34 +18,38 @@ type ControlledSliderProps = {
 }
 
 class ControlledSlider extends React.Component<
-  ControlledSliderProps & StyleProps,
-  ControlledSliderState
+  ControlledSliderProps & StyleProps
 > {
+
   static defaultProps = {
-    value: 0,
+    sliderValue: 0,
     discrete: false
   }
 
   constructor(props: ControlledSliderProps & StyleProps) {
     super(props)
-    this.state = {
-      value: this.props.value || 0
-    }
+    // this.state = {
+    //   sliderValue: this.props.sliderValue || 0
+    // }
 
-    this.setState(this.state)
+    // // this.setState(this.state)
   }
 
-  persistSliderValue(e: React.ChangeEvent<HTMLInputElement>) {
+  persistSliderValue(e: CustomEvent<Slider>) {
     // tslint:disable-next-line:no-console
-    console.log(this.props)
-    const newValue = parseInt(e.target.value, 10)
-    if (newValue === this.props.value) {
+    console.log(e)
+    // tslint:disable-next-line:no-console
+    console.log(e.detail.value)
+
+    // tslint:disable-next-line:no-console
+    const newValue = parseInt(e.detail.value, 10)
+    if (newValue === this.props.sliderValue) {
       return
     }
 
     // tslint:disable-next-line:no-console
     console.log(newValue)
-    this.props!.onChange(e)
+    this.props!.onChange(newValue)
     this.forceUpdate()
   }
 
@@ -53,19 +57,20 @@ class ControlledSlider extends React.Component<
     return (
       <div className={this.props.classes.container}>
         <Slider
-            value={this.props.value}
+            value={this.props.sliderValue}
             discrete={this.props.discrete}
             min={this.props.min}
             max={this.props.max}
             step={this.props.step}
             displayMarkers={true}
             onChange={e => this.persistSliderValue(e)}
+            onInput={e => this.persistSliderValue(e)}
         />
         <TextField
           id="number"
           disabled={true}
           className={this.props.classes.indicator}
-          value={this.props.value}
+          value={this.props.sliderValue}
           type="number"
           InputLabelProps={{
             shrink: true,
