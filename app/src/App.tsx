@@ -1,14 +1,30 @@
 import * as React from 'react'
 import './App.css'
+import GraphQlClient from 'remoting/Client'
+import { ApolloProvider } from 'react-apollo'
+import QueryPlatforms, {
+  PlatformProps
+} from 'remoting/decorators/withPlatforms'
+import withPlatforms from 'remoting/decorators/withPlatforms'
 
-// import GameGridView from 'views/GameGridView'
+const PlatformViewer = withPlatforms(({ platforms }) => (
+  <div>
+    Hello
+    {platforms.map(({PlatformID, FriendlyName}) => {
+       return (<div key={PlatformID}>{FriendlyName}</div>)
+    })}
+  </div>
+))
 
 class App extends React.Component {
   render() {
     return (
-      <div className="App">
-        {/* <GameGridView/> */}
-      </div>
+      <ApolloProvider client={GraphQlClient}>
+        <div className="App">
+          Hey
+          <PlatformViewer/>
+        </div>
+      </ApolloProvider>
     )
   }
 }

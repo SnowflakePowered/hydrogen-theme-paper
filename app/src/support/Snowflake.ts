@@ -1,11 +1,11 @@
 import * as Immutable from 'immutable'
 
 export interface Platform {
-    PlatformID: string
-    Metadata: { [key: string]: string }
-    MaximumInputs: number
-    FriendlyName: string
-    FileTypes: { [key: string]: string }
+    readonly PlatformID: string
+    readonly Metadata: { [key: string]: string }
+    readonly MaximumInputs: number
+    readonly FriendlyName: string
+    readonly FileTypes: { [key: string]: string[] }
   }
     
 export interface Game {
