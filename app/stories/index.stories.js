@@ -18,6 +18,8 @@ import full from './utils/full'
 import Sidebar from 'components/Sidebar/Sidebar';
 import PlatformDisplay from 'components/PlatformDisplay/PlatformDisplay';
 import PlatformList from 'components/PlatformList/PlatformList';
+import PlatformSelector from 'components/PlatformSelector/PlatformSelector';
+
 import { platform } from 'os';
 import GameDisplay from 'components/GameDisplay/GameDisplay';
 import ImageCard from 'components/ImageCard/ImageCard';
@@ -33,6 +35,7 @@ import { ConfigurationValueChangeEvent } from 'support/ComponentEvents/Configura
 import SelectWidgetView from './storyviews/SelectWidgetView';
 import IntegerWidgetView from './storyviews/IntegerWidgetView';
 import DecimalWidgetView from './storyviews/DecimalWidgetView';
+import PlatformSelectorView from './storyviews/PlatformSelectorView';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -94,11 +97,25 @@ const platforms = [
   {
     FriendlyName: "Lorem Ipsum",
     PlatformID: "PLATFORM_LI"
+  },
+  {
+    FriendlyName: "Lorem Ipsum 2",
+    PlatformID: "PLATFORM_LI2"
+  },
+  {
+    FriendlyName: "Lorem Ipsum 3",
+    PlatformID: "PLATFORM_LI3"
   }
 ]
 storiesOf('Platform List', module)
   .addDecorator(full)
   .add('platform list', () => <PlatformList platforms={platforms} selectedPlatform={platforms[0]}/>)
+
+storiesOf('Platform Selector', module)
+  .addDecorator(full)
+  .add('platform selector', () => <PlatformSelector platforms={platforms} 
+    selectedPlatform={platforms[0]}/>)
+  .add('platform selector with state', () => <PlatformSelectorView/>)
 
 
 storiesOf('Search Bar', module)

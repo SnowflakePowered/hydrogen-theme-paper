@@ -8,18 +8,20 @@ const styles: StyleRules = {
   container: {
     height: '100%',
     padding: 10,
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
+    paddingLeft: 24
   }
 }
 
 type BottomSheetProps = {
   children: React.ReactNode[] | React.ReactNode,
-  className?: string
+  className?: string,
+  onClick?: React.MouseEventHandler<HTMLDivElement>
 }
 
-const BottomSheet: React.StatelessComponent<BottomSheetProps & StyleProps> = ({children, classes}) => (
-  <Paper>
-    <div className={classes.container}>
+const BottomSheet: React.StatelessComponent<BottomSheetProps & StyleProps> = ({children, classes, onClick}) => (
+  <Paper style={{paddingBottom: 10, overflow: 'hidden'}} square={true} elevation={1}>
+    <div className={classes.container} onClick={onClick}>
       {children}
     </div>
   </Paper>
