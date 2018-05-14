@@ -1,7 +1,6 @@
 import * as React from 'react'
-import PlayArrow from 'material-ui-icons/PlayArrow'
-import IconButton from 'material-ui/IconButton'
-import { CircularProgress } from 'material-ui/Progress'
+import { PlayArrow } from '@material-ui/icons'
+import { IconButton, CircularProgress } from '@material-ui/core'
 
 import injectSheet, { StyleProps } from 'support/InjectSheet'
 import { styles } from './GamePlayButton.style'

@@ -1,11 +1,7 @@
 import * as React from 'react'
 import injectSheet, { StyleProps } from 'support/InjectSheet'
-import List, { ListItem } from 'material-ui/List'
-import Typography from 'material-ui/Typography'
+import { List, ListItem, Typography, Button } from '@material-ui/core'
 import BottomSheet from 'components/BottomSheet/BottomSheet'
-
-import Button from 'material-ui/Button'
-
 import { styles } from './PlatformList.style'
 import PlatformDisplay from 'components/PlatformDisplay/PlatformDisplay'
 import { Platform } from 'support/Snowflake'

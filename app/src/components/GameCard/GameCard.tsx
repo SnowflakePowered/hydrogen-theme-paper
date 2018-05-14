@@ -1,12 +1,11 @@
 import * as React from 'react'
 import injectSheet, { StyleProps } from 'support/InjectSheet'
 
-import Typography from 'material-ui/Typography'
-import Card, { CardContent, CardMedia } from 'material-ui/Card'
+import { Typography, Card, CardContent, CardMedia } from '@material-ui/core'
 
 import GamePlayButton from 'components/GamePlayButton/GamePlayButton'
 
-import PhotoIcon from 'material-ui-icons/Photo'
+import { Photo as PhotoIcon } from '@material-ui/icons'
 
 import * as classNames from 'classnames'
 import { styles } from './GameCard.style'

@@ -1,10 +1,10 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import Paper from 'material-ui/Paper'
+import { Paper } from '@material-ui/core'
 import injectSheet, { StyleProps } from 'support/InjectSheet'
 import { styles } from 'components/ImageCard/ImageCard.styles'
-import PhotoIcon from 'material-ui-icons/Photo'
+import { Photo as PhotoIcon } from '@material-ui/icons'
 
 type ImageCardProps = {
   image: string,

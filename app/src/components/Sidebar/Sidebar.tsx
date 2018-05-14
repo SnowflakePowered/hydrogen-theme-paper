@@ -1,12 +1,9 @@
 import * as React from 'react'
 import injectSheet, { StyleProps } from 'support/InjectSheet'
 
-import List, {
-  ListItem
-} from 'material-ui/List'
+import { List, ListItem } from '@material-ui/core'
+import { Menu as MenuIcon, VideogameAsset as GamepadIcon } from '@material-ui/icons'
 
-import MenuIcon from 'material-ui-icons/Menu'
-import GamepadIcon from 'material-ui-icons/VideogameAsset'
 // import Link from 'components/Link/Link'
 import { styles } from './Sidebar.style'
 import { NoProps } from 'support/NoProps'

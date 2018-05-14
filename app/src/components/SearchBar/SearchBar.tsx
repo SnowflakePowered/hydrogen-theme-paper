@@ -1,10 +1,8 @@
 import * as React from 'react'
 import injectSheet, { StyleProps } from 'support/InjectSheet'
+import { Paper, FormControl, Input } from '@material-ui/core'
 
-import Paper from 'material-ui/Paper'
-import FormControl from 'material-ui/Form/FormControl'
-import Input from 'material-ui/Input/Input'
-import SearchIcon from 'material-ui-icons/Search'
+import { Search as SearchIcon } from '@material-ui/icons'
 
 import { styles } from './SearchBar.style'
 import { SearchBarEvent } from 'support/ComponentEvents/SearchBarEvent'

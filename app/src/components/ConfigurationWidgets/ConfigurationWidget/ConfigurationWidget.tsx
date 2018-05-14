@@ -1,6 +1,6 @@
 import * as React from 'react'
 import injectSheet, { StyleProps } from 'support/InjectSheet'
-import { CircularProgress } from 'material-ui/Progress'
+import { CircularProgress } from '@material-ui/core'
 import { styles } from './ConfigurationWidget.style'
 import { ConfigurationValueChangeEvent } from 'support/ComponentEvents/ConfigurationValueChangeEvent'
 

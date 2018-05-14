@@ -1,6 +1,5 @@
-import grey from 'material-ui/colors/grey'
-import common from 'material-ui/colors/common'
-import { StyleRules } from 'material-ui/styles/withStyles'
+import { grey, common } from '@material-ui/core/colors'
+import { StyleRules } from '@material-ui/core/styles'
 
 export const styles: StyleRules = {
   button: {

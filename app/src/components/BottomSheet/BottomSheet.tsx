@@ -1,8 +1,8 @@
 import * as React from 'react'
-import Paper from 'material-ui/Paper'
+import { Paper } from '@material-ui/core'
 
 import injectSheet, { StyleProps } from 'support/InjectSheet'
-import { StyleRules } from 'material-ui/styles';
+import { StyleRules } from '@material-ui/core/styles'
 
 const styles: StyleRules = {
   container: {

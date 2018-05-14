@@ -4,7 +4,7 @@ import injectSheet from '../../src/support/InjectSheet'
 import GameCardGrid from '../../src/components/GameCardGrid/GameCardGrid'
 import GameCard from '../../src/components/GameCard/GameCard'
 
-import grey from 'material-ui/colors/grey'
+import { grey } from '@material-ui/core/colors';
 
 const styles = {
   container: {

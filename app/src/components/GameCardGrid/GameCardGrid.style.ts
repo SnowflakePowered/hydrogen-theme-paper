@@ -1,4 +1,4 @@
-import { StyleRules } from 'material-ui/styles/withStyles'
+import { StyleRules } from '@material-ui/core/styles'
 
 export const styles: StyleRules = {
   container: {

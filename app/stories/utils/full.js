@@ -1,5 +1,5 @@
 import React from 'react';
-import grey from 'material-ui/colors/grey';
+import { grey } from '@material-ui/core/colors';
 
 const style = {
   position: 'fixed',

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Switch from 'material-ui/Switch'
+import { Switch } from '@material-ui/core'
 
 import ConfigurationWidget, { WidgetChildrenProps }
  from 'components/ConfigurationWidgets/ConfigurationWidget/ConfigurationWidget'
