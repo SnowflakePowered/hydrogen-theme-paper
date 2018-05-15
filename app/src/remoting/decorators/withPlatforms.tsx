@@ -21,11 +21,13 @@ const QUERY_PLATFORMS = gql`
         }
       }
     }
+    selectedPlatformID @client
   }
 `
 
 export type PlatformProps = {
   readonly platforms: { [platformId: string]: Platform }
+  readonly selectedPlatform: Platform
 }
 
 const toFileTypesMapping = (
@@ -82,7 +84,11 @@ const withPlatforms = <P extends ConsistentWith<P, PlatformProps>>(
               return <p>Error :( </p>
             }
             const platformData = asPlatformMapping(data)
-            return <UnwrappedComponent {...this.props} platforms={platformData} />
+            const selectedPlatformID = data.selectedPlatformID
+            const selectedPlatform = data.selectedPlatformID 
+                ? platformData[selectedPlatformID]
+                : Object.values(platformData)[0]
+            return <UnwrappedComponent {...this.props} platforms={platformData} selectedPlatform={selectedPlatform}/>
           }}
         </Query>
       ) 

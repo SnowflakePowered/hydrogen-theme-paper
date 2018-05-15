@@ -1,6 +1,6 @@
 import * as React from 'react'
 import GraphQlClient from 'remoting/Client'
-import { ApolloProvider } from 'react-apollo'
+import { ApolloProvider, Mutation } from 'react-apollo'
 import QueryPlatforms, {
   PlatformProps
 } from 'remoting/decorators/withPlatforms'
@@ -10,12 +10,13 @@ import { Platform } from 'support/Snowflake'
 import { SelectedPlatformChangedEvent } from 'support/ComponentEvents/SelectedPlatformChangedEvent'
 import { withStyles, StyleRules } from '@material-ui/core/styles'
 import { StyleProps } from 'support/InjectSheet'
+import { SET_SELECTED_PLATFORM } from 'remoting/resolvers'
 
 const PlatformViewer = withPlatforms(({ platforms }) => (
   <div>
     Hello
-    {Object.values(platforms!).map(({PlatformID, FriendlyName}) => {
-       return (<div key={PlatformID}>{FriendlyName}</div>)
+    {Object.values(platforms!).map(({ PlatformID, FriendlyName }) => {
+      return <div key={PlatformID}>{FriendlyName}</div>
     })}
   </div>
 ))
@@ -26,42 +27,55 @@ type PlatformSelectorState = {
 
 type PlatformSelectorProps = {} & PlatformProps & StyleProps
 
-const StatefulPlatformSelectorStyles = {
+const StatefulPlatformSelectorStyles = {}
 
-}
+const StatefulPlatformSelector = withStyles(StatefulPlatformSelectorStyles)(
+  withPlatforms(
+    // tslint:disable-next-line:no-shadowed-variable
+    class StatefulPlatformSelector extends React.Component<
+      PlatformSelectorProps,
+      PlatformSelectorState
+    > {
+      constructor(props: PlatformSelectorProps) {
+        super(props)
+        this.state = {
+          selectedPlatform: Object.values(this.props.platforms)[0]
+        }
+        this.handleSelectedPlatformChanged = this.handleSelectedPlatformChanged.bind(
+          this
+        )
+      }
 
-const StatefulPlatformSelector = withStyles(StatefulPlatformSelectorStyles)(withPlatforms(
-  // tslint:disable-next-line:no-shadowed-variable
-  class StatefulPlatformSelector extends React.Component<PlatformSelectorProps, PlatformSelectorState>  {
-  constructor(props: PlatformSelectorProps) {
-    super(props)
-    this.state = {
-      selectedPlatform: Object.values(this.props.platforms)[0]
+      handleSelectedPlatformChanged({
+        nextPlatform
+      }: SelectedPlatformChangedEvent) {
+        // tslint:disable-next-line:no-console
+        console.log(nextPlatform)
+        // tslint:disable-next-line:no-console
+        console.log('changecalled')
+        this.setState({ selectedPlatform: nextPlatform })
+      }
+
+      render() {
+        return (
+          <Mutation mutation={SET_SELECTED_PLATFORM}>
+            {setSelectedPlatform => (
+              <PlatformSelector
+                platforms={this.props.platforms}
+                selectedPlatform={this.props.selectedPlatform}
+                onSelectedPlatformChanged={({nextPlatform}) => {
+                  setSelectedPlatform({variables: { platformID: nextPlatform.PlatformID } })
+                //  this.setState({ selectedPlatform: nextPlatform })
+                }}
+                gameCount={0}
+              />
+            )}
+          </Mutation>
+        )
+      }
     }
-    this.handleSelectedPlatformChanged = this.handleSelectedPlatformChanged.bind(this)
-  }
-
-  handleSelectedPlatformChanged({nextPlatform}: SelectedPlatformChangedEvent) {
-    // tslint:disable-next-line:no-console
-    console.log(nextPlatform)
-    // tslint:disable-next-line:no-console
-    console.log('changecalled')
-    this.setState({selectedPlatform: nextPlatform})
-  }
-
-  render() {
-    // tslint:disable-next-line:no-console
-    console.log(this.props)
-    return (
-    <PlatformSelector 
-      platforms={this.props.platforms}
-      selectedPlatform={this.state.selectedPlatform}
-      // tslint:disable-next-line:no-console
-      onSelectedPlatformChanged={this.handleSelectedPlatformChanged} 
-      gameCount={0}
-    />)
-  }
-}))
+  )
+)
 
 const StatedPlatformSelector = withPlatforms(PlatformSelector)
 
@@ -76,7 +90,7 @@ const appStyles: StyleRules = {
     bottom: 0
   },
   content: {
-    gridArea: 1,
+    gridArea: 1
   }
 }
 
@@ -89,7 +103,7 @@ class App extends React.Component<StyleProps> {
             <div>Hello World</div>
           </div>
           <div className={this.props.classes.platformSelectorContainer}>
-            <StatefulPlatformSelector/>
+            <StatefulPlatformSelector />
           </div>
         </div>
       </ApolloProvider>
