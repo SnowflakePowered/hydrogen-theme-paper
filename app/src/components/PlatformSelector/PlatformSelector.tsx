@@ -14,7 +14,7 @@ import {
 import { SelectedPlatformChangedEvent } from 'support/ComponentEvents/SelectedPlatformChangedEvent'
 
 type PlatformSelectorProps = {
-  platforms: { [platformId: string]: Platform }
+  readonly platforms: { [platformId: string]: Platform }
   selectedPlatform: Platform
   gameCount: number
   onSelectedPlatformChanged?: (e: SelectedPlatformChangedEvent) => void
@@ -52,6 +52,14 @@ class PlatformSelector extends React.Component<
     const { classes, gameCount, selectedPlatform, platforms } = this.props
     return (
       <div className={classes.container}>
+        <div className={classes.peek}>
+          <BottomSheet onClick={this.toggleDrawer(true)}>
+            <PlatformDisplay
+              platformName={selectedPlatform.FriendlyName}
+              gameCount={gameCount}
+            />
+          </BottomSheet>
+        </div>
         <div className={classes.drawerContainer}>
           <Drawer
             classes={{
@@ -91,14 +99,6 @@ class PlatformSelector extends React.Component<
               <div className={classes.containerClear}/>
             </div>
           </Drawer>
-        </div>
-        <div className={classes.peek}>
-          <BottomSheet onClick={this.toggleDrawer(true)}>
-            <PlatformDisplay
-              platformName={selectedPlatform.FriendlyName}
-              gameCount={gameCount}
-            />
-          </BottomSheet>
         </div>
       </div>
     )

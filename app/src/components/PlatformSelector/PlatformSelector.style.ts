@@ -2,12 +2,9 @@ import { StyleRules } from '@material-ui/core/styles'
 
 export const styles: StyleRules = {
   container: {
-    display: 'grid',
-    gridTemplateRows: 'auto 64px',
-    gridTemplateColumns: '100%',
-    gridTemplateAreas: '"show" "peek"',
-    height: '100% ',
-    width: '100%'
+    width: '100%',
+    position: 'relative',
+    zIndex: 1000,
   },
   listRoot: {
     maxHeight: '60vh',
@@ -28,7 +25,7 @@ export const styles: StyleRules = {
     gridTemplateRows: 'auto 62px'
   },
   drawer: {
-   // paddingBottom: 62
+   zIndex: -1,
   },
   listContainer: {
     maxHeight: '60vh',

@@ -2,6 +2,7 @@ import * as React from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import { Platform } from 'support/Snowflake'
+import { ConsistentWith, Overwrite, Omit } from 'remoting/typings'
 
 const QUERY_PLATFORMS = gql`
   query platforms {
@@ -24,7 +25,7 @@ const QUERY_PLATFORMS = gql`
 `
 
 export type PlatformProps = {
-  readonly platforms: Platform[]
+  readonly platforms: { [platformId: string]: Platform }
 }
 
 const toFileTypesMapping = (
@@ -51,21 +52,25 @@ const toMetadataMapping = (
 }
 
 // tslint:disable-next-line:no-any
-const asPlatformArray = (gqlData: any): Platform[] => {
-  const platformArray = gqlData.platformInfos.items.map(platformData => ({
+const asPlatformMapping = (gqlData: any): { [platformId: string]: Platform } => {
+  const platformMapping = gqlData.platformInfos.items.map(platformData => ({
     PlatformID: platformData.platformID,
     FriendlyName: platformData.friendlyName,
     MaximumInputs: platformData.maximumInputs,
     FileTypes: toFileTypesMapping(platformData.fileType),
     Metadata: toMetadataMapping(platformData.metadata)
   }))
-  return platformArray
+  .reduce((mapping, item) => {
+    mapping[item.PlatformID] = item
+    return mapping
+  },      {})
+  return platformMapping
 }
 
-const withPlatforms = <TProps extends {}>(
-  UnwrappedComponent: React.ComponentType<TProps & PlatformProps>
-): React.ComponentClass<TProps> =>
-  class WithPlatforms extends React.Component<TProps & PlatformProps> {
+const withPlatforms = <P extends ConsistentWith<P, PlatformProps>>(
+  UnwrappedComponent: React.ComponentType<P & PlatformProps>
+): React.ComponentType<Omit<P, 'platforms'>> =>
+  class WithPlatforms extends React.Component<Omit<P, 'platforms'>> {
     render() {
       return (
         <Query query={QUERY_PLATFORMS}>
@@ -76,7 +81,7 @@ const withPlatforms = <TProps extends {}>(
             if (error) {
               return <p>Error :( </p>
             }
-            const platformData = asPlatformArray(data)
+            const platformData = asPlatformMapping(data)
             return <UnwrappedComponent {...this.props} platforms={platformData} />
           }}
         </Query>
