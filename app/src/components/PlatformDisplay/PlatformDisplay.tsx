@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import InfoDisplay from 'components/InfoDisplay/InfoDisplay'
 
 type PlatformDisplayProps = {

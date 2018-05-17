@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Slider } from 'rmwc/Slider'
 import injectSheet, { StyleProps } from 'support/InjectSheet'
 import { styles } from './ControlledSlider.styles'

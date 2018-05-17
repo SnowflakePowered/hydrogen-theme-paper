@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Paper } from '@material-ui/core'
 
 import injectSheet, { StyleProps } from 'support/InjectSheet'

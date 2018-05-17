@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import GraphQlClient from 'remoting/Client'
 import { ApolloProvider, Mutation } from 'react-apollo'
 import QueryPlatforms, {

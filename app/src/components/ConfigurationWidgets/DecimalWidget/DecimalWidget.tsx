@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { ConfigurationOption, ConfigurationKey } from 'support/Snowflake'
 import ConfigurationWidget, {
   WidgetChildrenProps

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { ConfigurationOption } from 'support/Snowflake';
 import BooleanWidget from 'components/ConfigurationWidgets/BooleanWidget/BooleanWidget';
 import { action } from '@storybook/addon-actions';

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { StyleProps } from 'support/InjectSheet'
 import BottomSheet from 'components/BottomSheet/BottomSheet'
 import { styles } from './PlatformSelector.style'

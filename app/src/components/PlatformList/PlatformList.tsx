@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import injectSheet, { StyleProps } from 'support/InjectSheet'
 import { List, ListItem, Typography, Button } from '@material-ui/core'
 import BottomSheet from 'components/BottomSheet/BottomSheet'

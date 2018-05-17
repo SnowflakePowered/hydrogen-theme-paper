@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import injectSheet, { StyleProps } from 'support/InjectSheet'
 import { Paper, FormControl, Input } from '@material-ui/core'
 

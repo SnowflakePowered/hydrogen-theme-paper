@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import injectSheet, { StyleProps } from 'support/InjectSheet'
 import { dimensions } from 'components/GameCard/GameCard.style'
 import { styles } from './GameCardGrid.style'

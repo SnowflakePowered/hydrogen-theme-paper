@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { PlayArrow } from '@material-ui/icons'
 import { IconButton, CircularProgress } from '@material-ui/core'
 

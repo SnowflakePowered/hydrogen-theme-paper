@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import injectSheet, { StyleProps } from 'support/InjectSheet'
 
 import { Typography, Card, CardContent, CardMedia } from '@material-ui/core'
@@ -7,7 +7,7 @@ import GamePlayButton from 'components/GamePlayButton/GamePlayButton'
 
 import { Photo as PhotoIcon } from '@material-ui/icons'
 
-import * as classNames from 'classnames'
+import classNames from 'classnames'
 import { styles } from './GameCard.style'
 import { QuickPlayEvent } from 'support/ComponentEvents/QuickPlayEvent'
 import { ViewTransitionEvent, ViewStates } from 'support/ComponentEvents/ViewTransitionEvent'
