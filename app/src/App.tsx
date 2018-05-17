@@ -15,6 +15,8 @@ import { Switch, Route } from 'react-router'
 import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
 import { Menu as MenuIcon } from '@material-ui/icons'
 import Sidebar from 'components/Sidebar/Sidebar'
+import GameCard from 'components/GameCard/GameCard'
+import GameCardGrid from 'components/GameCardGrid/GameCardGrid'
 const PlatformViewer = withPlatforms(({ platforms }) => (
   <div>
     Hello
@@ -107,23 +109,49 @@ const appStyles: StyleRules = {
     bottom: 0
   },
   content: {
-    gridArea: 'content'
+    gridArea: 'content',
+    overflowY: 'auto',
+    height: '100%',
+    width: '100%'
   },
   appbarColor: {
     background: 'white'
   },
   appbarInner: {
     boxShadow: 'none',
-    borderBottom: '1px solid #eee'
+    borderBottom: '1px solid #e0e0e0'
   }
   
+}
+
+const portraitCard = int => (
+<GameCard
+  key={int}
+  title={int}
+  subtitle="Nintendo"
+  portrait={true}
+  guid={''}
+  platformID={''}
+/>)
+const portraitGameList = [...Array(100)].map((x, i) => portraitCard(i + 1))
+
+const PortraitGameGridViewStory = ({ classes }) => {
+
+  return (
+    <div style={{width: '100%', height: '100%'}}>
+      <GameCardGrid>
+        {
+          portraitGameList
+        }
+      </GameCardGrid>
+    </div>)
 }
 
 const StatefulPlatformSelectorView = ({ classes }) => {
   return (
     <React.Fragment>
       <div className={classes.gameGrid}>
-        <div className={classes.content}>
+        <div className={classes.content} style={{overflowY: 'auto'}}>
           <div>Hello World</div>
         </div>
       </div>
@@ -161,7 +189,7 @@ class App extends React.Component<StyleProps> {
           <Switch>
             <Route
               path="/"
-              render={props => <div>Hello World</div>}
+              render={props => <PortraitGameGridViewStory {...this.props}/>}
             />
           </Switch>
         </div>

@@ -20,9 +20,9 @@ type GameDetailsTransitionProps = {
 // todo: button on hover
 type GameCardProps = {
   // tslint:disable-next-line:no-any
-  image: string,
+  image?: string,
   title: string,
-  subtitle: string,
+  subtitle?: string,
   portrait?: boolean,
   landscape?: boolean,
   square?: boolean,
@@ -45,7 +45,7 @@ const GameCard: React.SFC<GameCardProps & StyleProps> =
     })}
   >
     <Card>
-      <CardMedia className={classes.cardMedia} src={image || ''}>
+      <CardMedia className={classes.cardMedia} image={image || 'someimage'}>
         <div className={classes.playButton}>
           <GamePlayButton onClick={() => onQuickPlay!({gameGuid: guid})}/>
         </div>
@@ -65,7 +65,7 @@ const GameCard: React.SFC<GameCardProps & StyleProps> =
               nextView: ViewStates.GameDetailsView, props: {platformID: platformID, guid: guid}
             })}
           >
-            {image ? <img className={classes.cardImage} src={image} /> : <PhotoIcon/>}
+            {image ? <img className={classes.cardImage} src={image ? image : ''} /> : <PhotoIcon/>}
           </div>
         </div>
       </CardMedia>

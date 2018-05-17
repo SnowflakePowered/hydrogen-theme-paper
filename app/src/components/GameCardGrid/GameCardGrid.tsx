@@ -44,7 +44,8 @@ class GameCardGrid extends React.PureComponent<GameCardGridProps & StyleProps, G
         fixedHeight: false,
         minWidth: 100,
         defaultHeight: 250,
-        minHeight: 250
+        minHeight: 250,
+        fixedWidth: true
       })
     }
   }
@@ -111,12 +112,15 @@ class GameCardGrid extends React.PureComponent<GameCardGridProps & StyleProps, G
                     height={height}
                     width={width}
                     ref={registerChild}
+                    // hack to improve performance.
+                    overscanByPixels={4000}
                     columnWidth={getColumnWidth}
                     deferredMeasurementCache={this.state.heightCache}
                     cellRenderer={cellRender}
                     columnCount={numberOfColumns}
                     rowCount={numberOfRows}
                     rowHeight={this.state.heightCache.rowHeight}
+                    overscanRowCount={2}
                   />)}
                 </ColumnSizer>
             )}}

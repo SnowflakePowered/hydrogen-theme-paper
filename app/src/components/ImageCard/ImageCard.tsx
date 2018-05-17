@@ -7,7 +7,7 @@ import { styles } from 'components/ImageCard/ImageCard.styles'
 import { Photo as PhotoIcon } from '@material-ui/icons'
 
 type ImageCardProps = {
-  image: string,
+  image?: string,
   elevation?: number
 }
 
