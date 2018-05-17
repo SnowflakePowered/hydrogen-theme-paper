@@ -11,7 +11,7 @@ import { SelectedPlatformChangedEvent } from 'support/ComponentEvents/SelectedPl
 import { withStyles, StyleRules } from '@material-ui/core/styles'
 import { StyleProps } from 'support/InjectSheet'
 import { SET_SELECTED_PLATFORM } from 'remoting/resolvers'
-
+import { Switch, Route } from 'react-router'
 const PlatformViewer = withPlatforms(({ platforms }) => (
   <div>
     Hello
@@ -94,19 +94,26 @@ const appStyles: StyleRules = {
   }
 }
 
+const StatefulPlatformSelectorView = ({classes}) => {
+  return (
+    <React.Fragment>
+      <div className={classes.content}>
+        <div>Hello World</div>
+      </div>
+      <div className={classes.platformSelectorContainer}>
+          <StatefulPlatformSelector />
+      </div>
+    </React.Fragment>
+  )
+}
 class App extends React.Component<StyleProps> {
   render() {
     return (
-      <ApolloProvider client={GraphQlClient}>
         <div className={this.props.classes.app}>
-          <div className={this.props.classes.content}>
-            <div>Hello World</div>
-          </div>
-          <div className={this.props.classes.platformSelectorContainer}>
-            <StatefulPlatformSelector />
-          </div>
+          <Switch>
+            <Route path="/" render={(props) => <StatefulPlatformSelectorView {...this.props}/>}/>
+          </Switch>
         </div>
-      </ApolloProvider>
     )
   }
 }

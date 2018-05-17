@@ -10,7 +10,11 @@ const GraphQlClient = new ApolloClient({
   clientState: {
     resolvers,
     defaults: {
-      selectedPlatformID: 'NINTENDO_NES'
+      state: {
+        __typename: '__state',
+        selectedPlatformID: 'NINTENDO_NES',
+        testState: 'ok'
+      }
     }
   },
   uri: 'http://localhost:9797',  

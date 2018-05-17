@@ -21,7 +21,9 @@ const QUERY_PLATFORMS = gql`
         }
       }
     }
-    selectedPlatformID @client
+    state @client {
+      selectedPlatformID
+    }
   }
 `
 
@@ -81,11 +83,13 @@ const withPlatforms = <P extends ConsistentWith<P, PlatformProps>>(
               return <p>Loading...</p>
             }
             if (error) {
-              return <p>Error :( </p>
+              return <p>Error: {error.message}</p>
             }
+            // tslint:disable-next-line:no-console
+            console.log(data)
             const platformData = asPlatformMapping(data)
-            const selectedPlatformID = data.selectedPlatformID
-            const selectedPlatform = data.selectedPlatformID 
+            const selectedPlatformID = data.state.selectedPlatformID
+            const selectedPlatform = selectedPlatformID 
                 ? platformData[selectedPlatformID]
                 : Object.values(platformData)[0]
             return <UnwrappedComponent {...this.props} platforms={platformData} selectedPlatform={selectedPlatform}/>

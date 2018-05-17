@@ -3,7 +3,7 @@ import { Context } from 'react-apollo'
 import gql from 'graphql-tag'
 
 type SelectedPlatformVariables = {
-    platformID: string
+  platformID: string
 }
 
 export const SET_SELECTED_PLATFORM = gql`
@@ -13,13 +13,24 @@ export const SET_SELECTED_PLATFORM = gql`
 `
 
 export default {
-    Mutation: {
-        setSelectedPlatform: (_, variables: SelectedPlatformVariables, { cache, getCacheKey }: Context) => {
-            // tslint:disable-next-line:no-console
-            console.log(variables)
-            const { platformID } = variables
-            cache.writeData({data: { selectedPlatformID: platformID } } )
-            return null
+  Mutation: {
+    setSelectedPlatform: (
+      _,
+      variables: SelectedPlatformVariables,
+      { cache, getCacheKey }: Context
+    ) => {
+      // tslint:disable-next-line:no-console
+      console.log(variables)
+      const { platformID } = variables
+      cache.writeData({
+        data: {
+          state: {
+            __typename: '__state',
+            selectedPlatformID: platformID
+          }
         }
+      })
+      return null
     }
+  }
 }
