@@ -1,10 +1,10 @@
 import React from 'react'
 import GraphQlClient from 'remoting/Client'
 import { ApolloProvider, Mutation } from 'react-apollo'
-import QueryPlatforms, {
+import RenderPlatform, {
+  withPlatforms,
   PlatformProps
 } from 'remoting/decorators/withPlatforms'
-import withPlatforms from 'remoting/decorators/withPlatforms'
 import PlatformSelector from 'components/PlatformSelector/PlatformSelector'
 import { Platform, Game } from 'support/Snowflake'
 import { SelectedPlatformChangedEvent } from 'support/ComponentEvents/SelectedPlatformChangedEvent'
@@ -59,17 +59,20 @@ const StatefulPlatformSelector = withStyles(StatefulPlatformSelectorStyles)(
         return (
           <Mutation mutation={SET_SELECTED_PLATFORM}>
             {setSelectedPlatform => (
-              <PlatformSelector
-                platforms={this.props.platforms}
-                selectedPlatform={this.props.selectedPlatform}
-                onSelectedPlatformChanged={({ nextPlatform }) => {
-                  setSelectedPlatform({
-                    variables: { platformID: nextPlatform.PlatformID }
-                  })
-                  //  this.setState({ selectedPlatform: nextPlatform })
-                }}
-                gameCount={0}
-              />
+              <RenderPlatformGames platformID={this.props.selectedPlatform.PlatformID}>
+                {({ games }) => (
+                  <PlatformSelector
+                    platforms={this.props.platforms}
+                    selectedPlatform={this.props.selectedPlatform}
+                    onSelectedPlatformChanged={({ nextPlatform }) => {
+                      setSelectedPlatform({
+                        variables: { platformID: nextPlatform.PlatformID }
+                      })
+                    }}
+                    gameCount={games.length}
+                  />
+                )}
+              </RenderPlatformGames>
             )}
           </Mutation>
         )
@@ -88,27 +91,23 @@ const portraitCard = (game: Game, int: number) => (
   />
 )
 
-const StatefulPlatformGameList = withPlatforms(
-  // tslint:disable-next-line:no-shadowed-variable
-  class StatefulPlatformGamesList extends React.Component<
-    PlatformSelectorProps
-  > {
-    constructor(props: PlatformSelectorProps) {
-      super(props)
-    }
-    render() {
-      return (
-        <RenderPlatformGames
-          platformID={this.props.selectedPlatform.PlatformID}
-        >
-          {({ games }) => <GameCardGrid>{
-            games.map((x, i) => portraitCard(x, i + 1))
-          }</GameCardGrid>}
-        </RenderPlatformGames>
-      )
-    }
+class StatefulPlatformGamesList extends React.Component {
+  render() {
+    return (
+      <RenderPlatform>
+        {({ selectedPlatform }) => (
+          <RenderPlatformGames platformID={selectedPlatform.PlatformID}>
+            {({ games }) => (
+              <GameCardGrid>
+                {games.map((x, i) => portraitCard(x, i + 1))}
+              </GameCardGrid>
+            )}
+          </RenderPlatformGames>
+        )}
+      </RenderPlatform>
+    )
   }
-)
+}
 
 const appStyles: StyleRules = {
   app: {
@@ -182,7 +181,7 @@ class App extends React.Component<StyleProps> {
           <Switch>
             <Route
               path="/"
-              render={props => <StatefulPlatformGameList {...this.props} />}
+              render={props => <StatefulPlatformGamesList {...this.props} />}
             />
           </Switch>
         </div>

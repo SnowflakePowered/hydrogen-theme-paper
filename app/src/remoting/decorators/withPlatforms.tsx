@@ -55,47 +55,72 @@ const toMetadataMapping = (
   return map
 }
 
-// tslint:disable-next-line:no-any
-const asPlatformMapping = (gqlData: any): { [platformId: string]: Platform } => {
-  const platformMapping = gqlData.platformInfos.items.map(platformData => ({
-    PlatformID: platformData.platformID,
-    FriendlyName: platformData.friendlyName,
-    MaximumInputs: platformData.maximumInputs,
-    FileTypes: toFileTypesMapping(platformData.fileType),
-    Metadata: toMetadataMapping(platformData.metadata)
-  }))
-  .reduce((mapping, item) => {
-    mapping[item.PlatformID] = item
-    return mapping
-  },      {})
+const asPlatformMapping = (
+  // tslint:disable-next-line:no-any
+  gqlData: any
+): { [platformId: string]: Platform } => {
+  const platformMapping = gqlData.platformInfos.items
+    .map(platformData => ({
+      PlatformID: platformData.platformID,
+      FriendlyName: platformData.friendlyName,
+      MaximumInputs: platformData.maximumInputs,
+      FileTypes: toFileTypesMapping(platformData.fileType),
+      Metadata: toMetadataMapping(platformData.metadata)
+    }))
+    .reduce((mapping, item) => {
+      mapping[item.PlatformID] = item
+      return mapping
+    // tslint:disable-next-line:align
+    }, {})
   return platformMapping
 }
 
-const withPlatforms = <P extends ConsistentWith<P, PlatformProps>>(
+interface PlatformRenderProps {
+  children: (platforms: PlatformProps) => React.ReactNode
+}
+
+export class RenderPlatform extends React.Component<PlatformRenderProps> {
+  render() {
+    return (
+      <Query query={QUERY_PLATFORMS}>
+        {({ loading, error, data }) => {
+          if (loading) {
+            return <p>Loading...</p>
+          }
+          if (error) {
+            return <p>Error: {error.message}</p>
+          }
+          // tslint:disable-next-line:no-console
+          console.log(data)
+          const platforms = asPlatformMapping(data)
+          const selectedPlatformID = data.state.selectedPlatformID
+          const selectedPlatform = selectedPlatformID
+            ? platforms[selectedPlatformID]
+            : Object.values(platforms)[0]
+          return this.props.children({ platforms, selectedPlatform })
+        }}
+      </Query>
+    )
+  }
+}
+
+export const withPlatforms = <P extends ConsistentWith<P, PlatformProps>>(
   UnwrappedComponent: React.ComponentType<P & PlatformProps>
 ): React.ComponentType<Omit<P, 'platforms'>> =>
   class WithPlatforms extends React.Component<Omit<P, 'platforms'>> {
     render() {
       return (
-        <Query query={QUERY_PLATFORMS}>
-          {({ loading, error, data }) => {
-            if (loading) {
-              return <p>Loading...</p>
-            }
-            if (error) {
-              return <p>Error: {error.message}</p>
-            }
-            // tslint:disable-next-line:no-console
-            console.log(data)
-            const platformData = asPlatformMapping(data)
-            const selectedPlatformID = data.state.selectedPlatformID
-            const selectedPlatform = selectedPlatformID 
-                ? platformData[selectedPlatformID]
-                : Object.values(platformData)[0]
-            return <UnwrappedComponent {...this.props} platforms={platformData} selectedPlatform={selectedPlatform}/>
-          }}
-        </Query>
-      ) 
+        <RenderPlatform>
+          {({ selectedPlatform, platforms }) => (
+            <UnwrappedComponent
+              {...this.props}
+              selectedPlatform={selectedPlatform}
+              platforms={platforms}
+            />
+          )}
+        </RenderPlatform>
+      )
     }
   }
-export default withPlatforms
+
+export default RenderPlatform

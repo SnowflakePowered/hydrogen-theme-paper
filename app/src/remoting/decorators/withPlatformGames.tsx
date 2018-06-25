@@ -85,35 +85,6 @@ const asGamesArray = (gqlData: any): Game[] => {
   return gamesArray
 }
 
-interface PlatformGamesQueryVariables {
-  platformID: string
-}
-
-const withPlatformGames = (queryData: PlatformGamesQueryVariables) =>
-   <P extends ConsistentWith<P, GameCollectionProps>>(
-  UnwrappedComponent: React.ComponentType<P & GameCollectionProps>
-): React.ComponentType<Omit<P, 'games'>> =>
-  class WithPlatformGames extends React.Component<Omit<P, 'games'>> {
-    render() {
-      return (
-        <Query query={QUERY_PLATFORM_GAMES} variables={queryData}>
-          {({ loading, error, data }) => {
-            if (loading) {
-              return <p>Loading...</p>
-            }
-            if (error) {
-              return <p>Error: {error.message}</p>
-            }
-            // tslint:disable-next-line:no-console
-            console.log(data)
-            const gamesData = asGamesArray(data)
-            return <UnwrappedComponent {...this.props} games={gamesData}/>
-          }}
-        </Query>
-      ) 
-    }
-  }
-
 interface PlatformGamesRenderProps {
   platformID: string
   children: (games: GameCollectionProps) => React.ReactNode
