@@ -9,26 +9,25 @@ export interface Platform {
   }
     
 export interface Game {
-    Files: File[]
-    Guid: string
-    Metadata: { [key: string]: Metadata }
-    PlatformID: string
-    Title: string
+    readonly Files: File[]
+    readonly Guid: string
+    readonly Metadata: { [key: string]: Metadata }
+    readonly PlatformID: string
+    readonly Title: string
   }
 
 export interface File {
-    FilePath: string
-    Guid: string
-    Metadata: { [key: string]: Metadata }
-    MimeType: string
-    Record: string
+    readonly FilePath: string
+    readonly Guid: string
+    readonly Metadata: { [key: string]: Metadata }
+    readonly MimeType: string
   }
   
 export interface Metadata {
-    Guid: string
-    Key: string
-    Record: string
-    Value: string
+    readonly Guid: string
+    readonly Key: string
+    readonly Record: string
+    readonly Value: string
 }
   
 export type ConfigurationOptionType = 'integer' | 'boolean' | 'decimal' | 'selection' | 'string'

@@ -2,7 +2,7 @@ import React from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import { Platform } from 'support/Snowflake'
-import { ConsistentWith, Overwrite, Omit } from 'remoting/typings'
+import { ConsistentWith, Omit } from 'remoting/typings'
 
 const QUERY_PLATFORMS = gql`
   query platforms {

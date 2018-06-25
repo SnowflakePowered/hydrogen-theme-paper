@@ -6,7 +6,7 @@ export const styles: StyleRules = {
     height: '100%',
     width: '100%',
     flexDirection: 'column',
-    overflowY: 'auto',
+    overflowY: 'hidden',
     overflowX: 'hidden',
     '-webkit-select': 'none'
   },

@@ -6,7 +6,7 @@ import QueryPlatforms, {
 } from 'remoting/decorators/withPlatforms'
 import withPlatforms from 'remoting/decorators/withPlatforms'
 import PlatformSelector from 'components/PlatformSelector/PlatformSelector'
-import { Platform } from 'support/Snowflake'
+import { Platform, Game } from 'support/Snowflake'
 import { SelectedPlatformChangedEvent } from 'support/ComponentEvents/SelectedPlatformChangedEvent'
 import { withStyles, StyleRules } from '@material-ui/core/styles'
 import { StyleProps } from 'support/InjectSheet'
@@ -17,14 +17,9 @@ import { Menu as MenuIcon } from '@material-ui/icons'
 import Sidebar from 'components/Sidebar/Sidebar'
 import GameCard from 'components/GameCard/GameCard'
 import GameCardGrid from 'components/GameCardGrid/GameCardGrid'
-const PlatformViewer = withPlatforms(({ platforms }) => (
-  <div>
-    Hello
-    {Object.values(platforms!).map(({ PlatformID, FriendlyName }) => {
-      return <div key={PlatformID}>{FriendlyName}</div>
-    })}
-  </div>
-))
+import RenderPlatformGames, {
+  GameCollectionProps
+} from 'remoting/decorators/withPlatformGames'
 
 type PlatformSelectorState = {
   selectedPlatform: Platform
@@ -50,7 +45,6 @@ const StatefulPlatformSelector = withStyles(StatefulPlatformSelectorStyles)(
           this
         )
       }
-
       handleSelectedPlatformChanged({
         nextPlatform
       }: SelectedPlatformChangedEvent) {
@@ -83,8 +77,38 @@ const StatefulPlatformSelector = withStyles(StatefulPlatformSelectorStyles)(
     }
   )
 )
+const portraitCard = (game: Game, int: number) => (
+  <GameCard
+    key={int}
+    title={game.Title}
+    subtitle="Nintendo"
+    portrait={true}
+    guid={''}
+    platformID={''}
+  />
+)
 
-const StatedPlatformSelector = withPlatforms(PlatformSelector)
+const StatefulPlatformGameList = withPlatforms(
+  // tslint:disable-next-line:no-shadowed-variable
+  class StatefulPlatformGamesList extends React.Component<
+    PlatformSelectorProps
+  > {
+    constructor(props: PlatformSelectorProps) {
+      super(props)
+    }
+    render() {
+      return (
+        <RenderPlatformGames
+          platformID={this.props.selectedPlatform.PlatformID}
+        >
+          {({ games }) => <GameCardGrid>{
+            games.map((x, i) => portraitCard(x, i + 1))
+          }</GameCardGrid>}
+        </RenderPlatformGames>
+      )
+    }
+  }
+)
 
 const appStyles: StyleRules = {
   app: {
@@ -121,87 +145,57 @@ const appStyles: StyleRules = {
     boxShadow: 'none',
     borderBottom: '1px solid #e0e0e0'
   }
-  
 }
 
-const portraitCard = int => (
-<GameCard
-  key={int}
-  title={int}
-  subtitle="Nintendo"
-  portrait={true}
-  guid={''}
-  platformID={''}
-/>)
-const portraitGameList = [...Array(100)].map((x, i) => portraitCard(i + 1))
-
-const PortraitGameGridViewStory = ({ classes }) => {
-
-  return (
-    <div style={{width: '100%', height: '100%'}}>
-      <GameCardGrid>
-        {
-          portraitGameList
-        }
-      </GameCardGrid>
-    </div>)
-}
-
-const StatefulPlatformSelectorView = ({ classes }) => {
-  return (
-    <React.Fragment>
-      <div className={classes.gameGrid}>
-        <div className={classes.content} style={{overflowY: 'auto'}}>
-          <div>Hello World</div>
-        </div>
-      </div>
-    </React.Fragment>
-  )
-}
 class App extends React.Component<StyleProps> {
   render() {
     return (
       <div className={this.props.classes.app}>
         <div className={this.props.classes.sidebar}>
-          <Sidebar/>
+          <Sidebar />
         </div>
         <div className={this.props.classes.appbar}>
-        <AppBar
-          position="static"
-          color="default"
-          classes={{
-            colorDefault: this.props.classes.appbarColor,
-            positionSticky: this.props.classes.appbarSticky,
-            root: this.props.classes.appbarInner
-          }}
-        >
-          <Toolbar>
-            <IconButton className={this.props.classes.menuButton} color="inherit" aria-label="Menu">
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="title" color="inherit">
-              Snowflake
-            </Typography>
-          </Toolbar>
-        </AppBar>
+          <AppBar
+            position="static"
+            color="default"
+            classes={{
+              colorDefault: this.props.classes.appbarColor,
+              positionSticky: this.props.classes.appbarSticky,
+              root: this.props.classes.appbarInner
+            }}
+          >
+            <Toolbar>
+              <IconButton
+                className={this.props.classes.menuButton}
+                color="inherit"
+                aria-label="Menu"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="title" color="inherit">
+                Snowflake
+              </Typography>
+            </Toolbar>
+          </AppBar>
         </div>
         <div className={this.props.classes.content}>
           <Switch>
             <Route
               path="/"
-              render={props => <PortraitGameGridViewStory {...this.props}/>}
+              render={props => <StatefulPlatformGameList {...this.props} />}
             />
           </Switch>
         </div>
         <Switch>
           <Route
             path="/"
-            render={props => <div className={this.props.classes.platformSelectorContainer}>
-                              <StatefulPlatformSelector />
-                    </div>}
+            render={props => (
+              <div className={this.props.classes.platformSelectorContainer}>
+                <StatefulPlatformSelector />
+              </div>
+            )}
           />
         </Switch>
-       
       </div>
     )
   }
