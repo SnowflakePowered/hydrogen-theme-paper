@@ -61,9 +61,9 @@ const GameCard: React.SFC<GameCardProps & StyleProps> =
           <div
             className={classes.cardImageContainer} 
             onClick={
-            () => onTransition!({
+            () => onTransition ? onTransition!({
               nextView: ViewStates.GameDetailsView, props: {platformID: platformID, guid: guid}
-            })}
+            }) : undefined }
           >
             {image ? <img className={classes.cardImage} src={image ? image : ''} /> : <PhotoIcon/>}
           </div>

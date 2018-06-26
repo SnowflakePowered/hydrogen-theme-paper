@@ -8,7 +8,7 @@ export const styles: StyleRules = {
     flexDirection: 'column',
     overflowY: 'hidden',
     overflowX: 'hidden',
-    '-webkit-select': 'none'
+    '-webkit-select': 'none',
   },
   card: {
     padding: 10,

@@ -11,15 +11,25 @@ import { SelectedPlatformChangedEvent } from 'support/ComponentEvents/SelectedPl
 import { withStyles, StyleRules } from '@material-ui/core/styles'
 import { StyleProps } from 'support/InjectSheet'
 import { SET_SELECTED_PLATFORM } from 'remoting/resolvers'
-import { Switch, Route } from 'react-router'
+import {
+  Switch,
+  Route,
+  RouterProps,
+  RouteComponentProps,
+  StaticContext
+} from 'react-router'
 import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
 import { Menu as MenuIcon } from '@material-ui/icons'
 import Sidebar from 'components/Sidebar/Sidebar'
 import GameCard from 'components/GameCard/GameCard'
 import GameCardGrid from 'components/GameCardGrid/GameCardGrid'
+import { withRouter, BrowserRouterProps } from 'react-router-dom'
 import RenderPlatformGames, {
   GameCollectionProps
 } from 'remoting/decorators/withPlatformGames'
+import GameDetailsPage from 'GameDetailsPage'
+import { ViewStates } from 'support/ComponentEvents/ViewTransitionEvent'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 type PlatformSelectorState = {
   selectedPlatform: Platform
@@ -59,7 +69,9 @@ const StatefulPlatformSelector = withStyles(StatefulPlatformSelectorStyles)(
         return (
           <Mutation mutation={SET_SELECTED_PLATFORM}>
             {setSelectedPlatform => (
-              <RenderPlatformGames platformID={this.props.selectedPlatform.PlatformID}>
+              <RenderPlatformGames
+                platformID={this.props.selectedPlatform.PlatformID}
+              >
                 {({ games }) => (
                   <PlatformSelector
                     platforms={this.props.platforms}
@@ -81,13 +93,23 @@ const StatefulPlatformSelector = withStyles(StatefulPlatformSelectorStyles)(
   )
 )
 const portraitCard = (game: Game, int: number) => (
-  <GameCard
+  <Route
     key={int}
-    title={game.Title}
-    subtitle="Nintendo"
-    portrait={true}
-    guid={''}
-    platformID={''}
+    render={({ history }) => (
+      <GameCard
+        key={int}
+        title={game.Title}
+        subtitle="Nintendo"
+        portrait={true}
+        guid={game.Guid}
+        platformID={game.PlatformID}
+        onTransition={event => {
+          if (event.nextView === ViewStates.GameDetailsView) {
+            history.push(`/game/${game.Guid}`, { game: game })
+          }
+        }}
+      />
+    )}
   />
 )
 
@@ -146,7 +168,10 @@ const appStyles: StyleRules = {
   }
 }
 
-class App extends React.Component<StyleProps> {
+class App extends React.Component<
+// tslint:disable-next-line:no-any
+  StyleProps & RouteComponentProps<any, StaticContext>
+> {
   render() {
     return (
       <div className={this.props.classes.app}>
@@ -178,12 +203,31 @@ class App extends React.Component<StyleProps> {
           </AppBar>
         </div>
         <div className={this.props.classes.content}>
-          <Switch>
-            <Route
-              path="/"
-              render={props => <StatefulPlatformGamesList {...this.props} />}
-            />
-          </Switch>
+          <TransitionGroup component={null}>
+            <CSSTransition
+              key={this.props.location.key}
+              classNames="fade"
+              timeout={250}
+            >
+              <Switch location={this.props.location}>
+                <Route
+                  exact={true}
+                  path="/"
+                  render={props => (
+                    <StatefulPlatformGamesList {...this.props} />
+                  )}
+                />
+                <Route
+                  exact={true}
+                  path="/game/:game"
+                  render={props => (
+                    <GameDetailsPage game={props.location.state.game} />
+                  )}
+                />
+                <Route render={props => <div>404</div>} />
+              </Switch>
+            </CSSTransition>
+          </TransitionGroup>
         </div>
         <Switch>
           <Route

@@ -5,12 +5,12 @@ import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 import { ApolloProvider } from 'react-apollo'
 import GraphQlClient from 'remoting/Client'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 
 ReactDOM.render(
     <BrowserRouter>
         <ApolloProvider client={GraphQlClient}>
-            <App />
+        <Route render={props => (<App {...props}/>)}/>
         </ApolloProvider>
     </BrowserRouter>, 
     document.getElementById('root') as HTMLElement)

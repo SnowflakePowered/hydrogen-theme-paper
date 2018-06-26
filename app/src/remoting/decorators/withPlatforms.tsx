@@ -106,8 +106,8 @@ export class RenderPlatform extends React.Component<PlatformRenderProps> {
 
 export const withPlatforms = <P extends ConsistentWith<P, PlatformProps>>(
   UnwrappedComponent: React.ComponentType<P & PlatformProps>
-): React.ComponentType<Omit<P, 'platforms'>> =>
-  class WithPlatforms extends React.Component<Omit<P, 'platforms'>> {
+): React.ComponentType<P> =>
+  class WithPlatforms extends React.Component<P> {
     render() {
       return (
         <RenderPlatform>
