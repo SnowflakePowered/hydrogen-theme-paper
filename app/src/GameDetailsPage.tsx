@@ -6,7 +6,13 @@ interface GameDetailsPageProps {
 }
 class GameDetailsPage extends React.Component<GameDetailsPageProps> {
     render () {
-        return <div>{this.props.game.Title}</div>
+        return (
+            <div>
+                {this.props.game.Title}
+                {this.props.game.Metadata}
+            
+            </div>
+        )
     }
 }
 

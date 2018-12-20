@@ -30,11 +30,12 @@ export interface Metadata {
     readonly Value: string
 }
   
-export type ConfigurationOptionType = 'integer' | 'boolean' | 'decimal' | 'selection' | 'string'
+export type ConfigurationOptionType = 'integer' | 'boolean' | 'decimal' | 'selection' | 'string' | 'path'
 
 export interface ConfigurationValue {
   Value: number | boolean | string,
-  Guid: string
+  Guid: string,
+  OptionKey: string,
 }
 
 export interface ConfigurationDescriptor {
@@ -42,7 +43,10 @@ export interface ConfigurationDescriptor {
   Description: string,
   DisplayName: string,
   Simple: boolean,
+  Flag: boolean,
+  Private: boolean,
   Type: ConfigurationOptionType,
+  OptionKey: string,
   Min?: number,
   Max?: number,
   Increment?: number
@@ -63,7 +67,8 @@ export interface ConfigurationOption {
 export interface ConfigurationSectionDescriptor {
   Description: string,
   DisplayName: string,
-  SectionName: string
+  SectionName: string,
+  Options: ConfigurationDescriptor[]
 }
 
 export interface ConfigurationSection {
